@@ -1,0 +1,46 @@
+name: 🤖 Run Agents
+
+on:
+  issues:
+    types: [opened, edited]
+
+jobs:
+  run-agents:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run Agents
+        run: |
+          python main.py --requirement "${{ github.event.issue.body }}"
+
+      - name: Upload Project Files
+        uses: actions/upload-artifact@v3
+        with:
+          name: generated-project
+          path: output/
+
+      - name: Post Comment
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '✅ **Agents Completed!**\n\n📋 Clarifier: ✓\n💻 Developer: ✓\n🔍 Reviewer: ✓\n🧪 Tester: ✓\n📚 Documenter: ✓\n✔️ Checklist: ✓\n\n📥 Download generated files from **Artifacts** tab above.'
+            })
