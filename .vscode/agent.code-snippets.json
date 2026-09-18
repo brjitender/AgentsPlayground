@@ -1,0 +1,55 @@
+{
+  "Agent Template": {
+    "prefix": "agent",
+    "body": [
+      "---",
+      "name: ${1:AgentName}",
+      "description: ${2:Description of what this agent does}",
+      "tools: ['${3:tool1}', '${4:tool2}']",
+      "agents: ${5:['OtherAgent1']}",
+      "model: ['Claude Opus 4.5', 'GPT-5.2']",
+      "---",
+      "",
+      "# ${1:AgentName}",
+      "",
+      "## Job",
+      "",
+      "${0:Description of the agent's responsibilities}",
+      "",
+      "## Rules",
+      "",
+      "- ${0:Rule 1}",
+      "- Rule 2"
+    ],
+    "description": "Create new agent definition"
+  },
+
+  "Skill Template": {
+    "prefix": "skill",
+    "body": [
+      "---",
+      "name: ${1:SkillName}",
+      "version: 1.0.0",
+      "description: ${2:What this skill does}",
+      "category: ${3:development}",
+      "complexity: ${4:medium}",
+      "time_estimate: \"${5:15 min}\"",
+      "tools_required: ['${6:tool1}', '${7:tool2}']",
+      "agents_who_call_this: [${8:Developer}]",
+      "---",
+      "",
+      "# Skill: ${1:SkillName}",
+      "",
+      "## What This Skill Does",
+      "",
+      "${0:Detailed description}",
+      "",
+      "## How It Works",
+      "",
+      "1. Step 1",
+      "2. Step 2",
+      "3. Step 3"
+    ],
+    "description": "Create new skill definition"
+  }
+}
