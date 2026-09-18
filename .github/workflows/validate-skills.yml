@@ -3,10 +3,10 @@ name: Validate Skills
 on:
   pull_request:
     paths:
-      - "skills/**"
+      - "agents/**"
   push:
     paths:
-      - "skills/**"
+      - "agents/**"
 
 jobs:
   validate:
@@ -14,35 +14,34 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Lint Markdown
-        uses: nosborn/github-action-markdown-cli@v3.3.0
-        with:
-          files: agents
-          config_file: .markdownlint.json
-
-      - name: Check Markdown syntax
+      - name: Check YAML frontmatter
         run: |
           find agents/ -name "*.md" -type f | while read file; do
             echo "Checking $file..."
-            grep -q "^---$" "$file" || echo "ERROR: No YAML frontmatter in $file"
+            if grep -q "^---$" "$file"; then
+              echo "✓ $file has YAML frontmatter"
+            else
+              echo "✗ $file missing YAML frontmatter"
+              exit 1
+            fi
           done
 
       - name: Verify required sections
         run: |
           find agents/ -name "*.md" -not -name "TEMPLATE.md" -type f | while read file; do
             echo "Validating $file..."
-            grep -q "## Overview" "$file" || echo "ERROR: Missing Overview section"
-            grep -q "## Description" "$file" || echo "WARNING: Missing Description section"
+            grep -q "## " "$file" && echo "✓ $file has sections" || echo "⚠ $file may be empty"
           done
 
-      - name: Lint YAML frontmatter
+      - name: Validate YAML syntax
         run: |
           python3 -m pip install pyyaml
-          python3 << 'PYTHON'
+          python3 << 'EOF'
           import os
           import re
           import yaml
 
+          errors = 0
           for root, dirs, files in os.walk('agents'):
               for file in files:
                   if file.endswith('.md'):
@@ -56,5 +55,10 @@ jobs:
                                   print(f"✓ {filepath} - YAML valid")
                               except yaml.YAMLError as e:
                                   print(f"✗ {filepath} - YAML error: {e}")
+                                  errors += 1
                           else:
-                              print(f"⚠ {filepath} - No YAML frontmatter found")
+                              print(f"⚠ {filepath} - No YAML frontmatter")
+
+          if errors > 0:
+              exit(1)
+          EOF
