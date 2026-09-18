@@ -1,31 +1,59 @@
-# Logs
-*.log
-logs/
-*.pid
-*.seed
-
-# Dependencies
-node_modules/
-.venv/
-venv/
-__pycache__/
-
-# IDE
-.vscode/settings.local.json
-.idea/
-*.swp
-*.swo
-
-# Environment
-.env.local
-.env.*.local
-secrets/
-
-# Generated files
-/output/
-/temp/
-coverage/
-
 # OS
 .DS_Store
 Thumbs.db
+
+# Node
+node_modules/
+package-lock.json
+yarn.lock
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.sublime-*
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+env/
+venv/
+
+# Build
+dist/
+build/
+*.egg-info/
+
+# Logs
+*.log
+logs/
+
+# Temporary
+temp/
+tmp/
+.cache/
+
+# Project specific
+.env
+.env.local
+.env.*.local
+
+# GitHub
+.github/secrets/
+
+# Agent execution logs
+execution_logs/
+
+# Monitoring data
+monitoring/data/
+monitoring/logs/
+
+# Test coverage
+coverage/
+.coverage
+htmlcov/
+

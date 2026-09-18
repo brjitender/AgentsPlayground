@@ -1,45 +1,48 @@
 {
-  // Editor
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
   "editor.wordWrap": "on",
-  "editor.rulers": [80, 120],
-
-  // Markdown
-  "markdown.preview.fontSize": 14,
   "[markdown]": {
+    "editor.wordWrap": "on",
     "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.formatOnSave": true,
-    "editor.wordWrap": "on"
+    "editor.formatOnSave": true
   },
-
-  // YAML
   "[yaml]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.insertSpaces": true,
-    "editor.tabSize": 2,
-    "editor.autoIndent": "keep"
+    "editor.tabSize": 2
   },
-
-  // GitLens
-  "gitlens.hovers.currentLine.enabled": true,
-  "gitlens.blame.ignoreWhitespace": true,
-
-  // Copilot
-  "github.copilot.enable": {
-    "*": true,
-    "yaml": false, // Less useful for YAML
-    "markdown": false // Keep markdown human-written
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
   },
-
-  // Files
   "files.exclude": {
-    "**/*.log": true,
-    "**/node_modules": true,
-    "**/__pycache__": true
+    "**/.DS_Store": true,
+    "**/.git": true,
+    "**/node_modules": true
   },
-
+  "search.exclude": {
+    "**/.git": true,
+    "**/node_modules": true,
+    "**/dist": true
+  },
+  "cSpell.words": [
+    "AgentsPlayground",
+    "Clarifier",
+    "BrainBox",
+    "Checklist",
+    "roadmap"
+  ],
+  "git.ignoreLimitWarning": true,
+  "editor.rulers": [80, 120],
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "markdown.preview.breaks": true,
+  "markdown.preview.linkify": true,
   "files.watcherExclude": {
     "**/.git/objects/**": true,
-    "**/node_modules/**": true
+    "**/.git/subtree-cache/**": true,
+    "**/node_modules/*/**": true,
+    "**/.vscode": true
   }
 }
