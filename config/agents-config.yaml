@@ -1,0 +1,52 @@
+# Agent Configuration File
+
+brainbox:
+  name: BrainBox
+  role: Orchestrator
+  retry_limit: 3
+  timeout_minutes: 120
+  description: Main orchestrator and workflow controller
+
+clarifier:
+  name: Clarifier
+  role: Requirements Specialist
+  timeout_minutes: 30
+  description: Analyzes requirements and produces acceptance criteria
+
+developer:
+  name: Developer
+  role: Code Writer
+  timeout_minutes: 60
+  description: Writes code and creates unit tests
+
+reviewer:
+  name: Reviewer
+  role: Quality Analyst
+  timeout_minutes: 45
+  description: Reviews code quality and security
+  read_only: true
+
+test:
+  name: Test
+  role: Testing Specialist
+  timeout_minutes: 45
+  description: Runs tests and checks coverage
+
+docs:
+  name: Docs
+  role: Documentation Specialist
+  timeout_minutes: 30
+  description: Updates and maintains documentation
+
+checklist:
+  name: Checklist
+  role: Verification Gate
+  timeout_minutes: 15
+  description: Final line-by-line verification
+
+# Global settings
+global:
+  execution_mode: sequential
+  log_level: info
+  retry_backoff_factor: 2
+  max_parallel_agents: 3
