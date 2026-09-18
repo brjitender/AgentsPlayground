@@ -13,21 +13,28 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      - name: Lint Markdown
+        uses: nosborn/github-action-markdown-cli@v3.3.0
+        with:
+          files: agents
+          config_file: .markdownlint.json
+
       - name: Check Markdown syntax
         run: |
-          find skills/ -name "*.md" -type f | while read file; do
+          find agents/ -name "*.md" -type f | while read file; do
             echo "Checking $file..."
-            # Basic YAML frontmatter validation
             grep -q "^---$" "$file" || echo "ERROR: No YAML frontmatter in $file"
           done
+
       - name: Verify required sections
         run: |
-          find skills/ -name "*.md" -not -name "TEMPLATE.md" -type f | while read file; do
+          find agents/ -name "*.md" -not -name "TEMPLATE.md" -type f | while read file; do
             echo "Validating $file..."
             grep -q "## Overview" "$file" || echo "ERROR: Missing Overview section"
-            grep -q "## How It Works" "$file" || echo "ERROR: Missing How It Works section"
-            grep -q "## Testing Strategy" "$file" || echo "ERROR: Missing Testing Strategy section"
+            grep -q "## Description" "$file" || echo "WARNING: Missing Description section"
           done
+
       - name: Lint YAML frontmatter
         run: |
           python3 -m pip install pyyaml
@@ -36,9 +43,9 @@ jobs:
           import re
           import yaml
 
-          for root, dirs, files in os.walk('skills'):
+          for root, dirs, files in os.walk('agents'):
               for file in files:
-                  if file.endswith('.md') and file != 'TEMPLATE.md':
+                  if file.endswith('.md'):
                       filepath = os.path.join(root, file)
                       with open(filepath, 'r') as f:
                           content = f.read()
@@ -49,4 +56,5 @@ jobs:
                                   print(f"✓ {filepath} - YAML valid")
                               except yaml.YAMLError as e:
                                   print(f"✗ {filepath} - YAML error: {e}")
-          PYTHON
+                          else:
+                              print(f"⚠ {filepath} - No YAML frontmatter found")
