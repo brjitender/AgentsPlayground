@@ -12,14 +12,15 @@ jobs:
   validate:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+      
       - name: Check Markdown syntax
         run: |
           find skills/ -name "*.md" -type f | while read file; do
             echo "Checking $file..."
-            # Basic YAML frontmatter validation
             grep -q "^---$" "$file" || echo "ERROR: No YAML frontmatter in $file"
           done
+      
       - name: Verify required sections
         run: |
           find skills/ -name "*.md" -not -name "TEMPLATE.md" -type f | while read file; do
@@ -28,10 +29,11 @@ jobs:
             grep -q "## How It Works" "$file" || echo "ERROR: Missing How It Works section"
             grep -q "## Testing Strategy" "$file" || echo "ERROR: Missing Testing Strategy section"
           done
+      
       - name: Lint YAML frontmatter
         run: |
           python3 -m pip install pyyaml
-          python3 - << 'PYTHON'
+          python3 << 'PYTHON'
 import os
 import re
 import yaml
