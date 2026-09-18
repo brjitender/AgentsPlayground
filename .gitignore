@@ -1,0 +1,31 @@
+# Logs
+*.log
+logs/
+*.pid
+*.seed
+
+# Dependencies
+node_modules/
+.venv/
+venv/
+__pycache__/
+
+# IDE
+.vscode/settings.local.json
+.idea/
+*.swp
+*.swo
+
+# Environment
+.env.local
+.env.*.local
+secrets/
+
+# Generated files
+/output/
+/temp/
+coverage/
+
+# OS
+.DS_Store
+Thumbs.db
